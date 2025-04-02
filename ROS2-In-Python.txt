@@ -31,7 +31,12 @@ entry_point_script_path: mars_rover_systems.heartbeat:main:
 3) Within heartbeat.py ( note the use of a : instead of a .) we specify the method to be executed, in this case, the method named main().
 
 
+** NODE DECLARATION **
 
+node = Node('mars_rover_1') : NODE DECLARATION
+node.get_logger().info(f"{i+1}: MARS ROVER 1 IS ALIVE" + str(ros_time_stamp)) : PRINT IN NODE
+node.destroy_node() : DESTROY
+ros_time_stamp = node.get_clock().now() : GET TIME
 
 
 
