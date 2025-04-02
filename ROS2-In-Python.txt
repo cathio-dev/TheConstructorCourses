@@ -1,0 +1,53 @@
+** ROS2 IN PYTHON **
+
+/UNIT 2 - ROS 2 BASIC CONCEPTS/
+
+ros2 run <package_name> <executable_file>: RUN PACKAGE
+ros2 launch <package_name> <launch_file>: RUN LAUNCH
+ros2 pkg create --build-type ament_python mars_rover_systems --dependencies rclpy: CREATE PKG 
+
+ros2 pkg list: Gives you a list of all the ROS packages in your system.
+
+ros2 pkg list | grep mars_rover_systems: Filters the list to show only the package named mars_rover_systems.
+
+** PYTHON STRUCTURE **
+
+rclcpp: ROS2 client library for C++.
+rclpy: ROS2 client library for Python.
+
+** SETUP PY: ** 
+
+'console_scripts': [
+            'entry_point_name = entry_point_script_path',
+            'another_entry_point_name = another_entry_point_script_path',
+            ...
+            'still_another_entry_point_name = still_another_entry_point_script_path'
+        ],
+
+entry_point_script_path: mars_rover_systems.heartbeat:main:
+
+1) This tells ROS2 that we want to go to a folder inside the package named mars_rover_systems. By default when we create a package, a folder with the EXACT SAME NAME as the package is generated inside it.
+2) It then specifies which script inside the folder mars_rover_systems we have to look for, in this case heartbeat.py.
+3) Within heartbeat.py ( note the use of a : instead of a .) we specify the method to be executed, in this case, the method named main().
+
+
+
+
+
+
+
+
+
+* Compiling: *
+
+  1 - cd ~/ros2_ws
+  2 - colcon build (colcon build --packages-select <package name>)
+  3 - source install/setup.bash
+
+** TOPICS **:
+
+ros2 topic list: list topics
+ros2 topic info: info about topic | PUBLISHER, SUBSCRIBER
+
+PUBLISHING IN A TOPIC: ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.0}}"
+
