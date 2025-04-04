@@ -139,11 +139,88 @@ setup(
 
 TERMINAL: ros2 launch <package> <launch file>
 
+==========================================================================================================================
+
+/UNIT 2 - ROS 2 BASIC CONCEPTS/
 
 ** TOPICS **:
 
 ros2 topic list: list topics
 ros2 topic info: info about topic | PUBLISHER, SUBSCRIBER
 
-PUBLISHING IN A TOPIC: ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.0}}"
+EXPLANATION: 
+- Type: Refers to what we know as ROS2 interfaces associated with the Topic with which you need to work with. Interfaces define the type of data transmitted through this topic. It could be images, string, laser data or whatever you need to transmit. In this case its Twist which is a kind of message used for moving robots around.
+
+- Publisher count: Refers to the number of nodes that publish data to this topic. In those case there are NONE, which means that nothing is introducing data in this topic.
+
+- Subscription count: Refers to the number of active nodes that read data from this topic. In this case we have TWO because each pair of wheels works independently, one is for the front wheels and the other for the rear wheels.
+
+ros2 interface show <package_name>/msg/<interface_name>: SHOW INFORMATIONS OF THE INTERFACE 
+
+ros2 topic echo <package_name> (--once) if u want once sample
+
+You can visualize the image topics data graphically using this tool, which essentially performs a ROS2 topic echo and uses the image data to display it in a more comprehensible way than just an array of numbers: ros2 run rqt_image_view rqt_image_view /leo/camera/image_raw
+
+
+******************************************
+os2 topic info /cmd_vel --verbose
+Type: geometry_msgs/msg/Twist
+
+Publisher count: 0
+
+Subscription count: 2
+
+Node name: four_diff_controller
+Node namespace: /
+Topic type: geometry_msgs/msg/Twist
+Endpoint type: SUBSCRIPTION
+GID: 01.0f.6d.87.44.01.6a.6b.01.00.00.00.00.00.8a.04.00.00.00.00.00.00.00.00
+QoS profile:
+  Reliability: RELIABLE
+  History (Depth): UNKNOWN
+  Durability: VOLATILE
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+Node name: four_diff_controller2
+Node namespace: /
+Topic type: geometry_msgs/msg/Twist
+Endpoint type: SUBSCRIPTION
+GID: 01.0f.6d.87.44.01.6a.6b.01.00.00.00.00.00.9c.04.00.00.00.00.00.00.00.00
+QoS profile:
+  Reliability: RELIABLE
+  History (Depth): UNKNOWN
+  Durability: VOLATILE
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+*******************************************************************************
+PROVES THAT /cmd_vel have 2 subscribers: one for front wheels, and other for back wheels
+
+
+
+The ros2 interface list command prints a list of all available interfaces.
+
+- End of Notes -
+You should find a similar result in the terminal where you ran the command. Looking at what the Terminal shows you, you will see that the interfaces are divided into the following groups:
+
+Messages: Can be found as .msg files. They are simple text files that describe the fields of a ROS message. You can use them to generate source code for messages.
+
+Services: Can be found as .srv files. They are composed of two parts: a request and a response. Both are message declarations.
+
+Actions: Can be found as .action files. They are composed of three parts: a goal, a result, and feedback. Each part contains a message declaration.
+
+
+PUBLISHING IN A TOPIC: ros2 topic pub <topic_name> <interface_name> <message>
+ros2 topic info /cmd_vel (ve quantos publishers e subscribers)
+
+ros2 topic echo /cmd_vel (--once ou nao): consegue ver se ta recebendo algum pub, seja do teleop seja do topico fixo publicado
+
+
+Here, the publishing node is teleop_twist_keyboard, which is the name of the node launched with the command ros2 run teleop_twist_keyboard teleop_twist_keyboard. (PUB PODE SER POR EXECUTAVEL)
+
 
