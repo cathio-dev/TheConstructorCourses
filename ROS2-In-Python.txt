@@ -141,7 +141,7 @@ TERMINAL: ros2 launch <package> <launch file>
 
 ==========================================================================================================================
 
-/UNIT 2 - ROS 2 BASIC CONCEPTS/
+/UNIT 3 - UNDERSTANDING ROS2 TOPICS/
 
 ** TOPICS **:
 
@@ -223,4 +223,43 @@ ros2 topic echo /cmd_vel (--once ou nao): consegue ver se ta recebendo algum pub
 
 Here, the publishing node is teleop_twist_keyboard, which is the name of the node launched with the command ros2 run teleop_twist_keyboard teleop_twist_keyboard. (PUB PODE SER POR EXECUTAVEL)
 
+// 3.4 //
+PASSO A PASSO CONSTRUÇÃO PACKAGE:
 
+Create a new package to house all the code for this unit.
+Following the guidelines from the previous unit, create a package named mars_rover_tasks.
+The dependencies for this package should include rclpy, std_msgs, nav_msgs, sensor_msgs, and geometry_msgs, as we will be using elements from these packages throughout the unit.
+Set up the launch folder and configure the setup.py.
+Create a launch folder inside the mars_rover_tasks package, and configure the setup.py so that launch files with the .launch.py extension are correctly recognized by the ROS2 system.
+Create a Python script for the subscriber.
+Inside the scripts folder (which should be named mars_rover_tasks by default), create a Python file named subscriber_obstacle_detector.py.
+
+This file should define a custom ROS2 node called ObstacleDetectorNode.
+For now, the script should only start the node, print a message confirming the node has started, and then terminate. No additional functionality is required at this point.
+Set the entry point for this script as subscriber_obstacle_detector_executable.
+Compile only the specific package.
+To compile only the mars_rover_tasks package, use the following command:
+====================================================================================================================================================================================================
+
+Step1: Create a subscription to a topic inside the ROS2 node class:¶
+We want to subscribe to the laser_scan topic.
+For that we will use the method self.create_subscription(). Its self because its making reference to the Node class, so its the Node class that gives us the capability of starting a SUBSCRIBER.
+
+For instance, you can see from the output that the Reliability setting is RELIABLE.
+This is why you should set the same in your subscriber node:
+COLCOAMOS RELIABLE PQ O TOPIC INFO -v É RELIABLE
+
+QoSProfile(depth=10, reliability=ReliabilityPolicy.RELIABLE))
+In any case, do not worry too much about these QoS settings right now, as they are a somewhat more advanced concept. If you want to learn more about this topic, you can check out the Understanding QoS unit from the Intermediate ROS2 course.
+
+====================================================================================================================================================================================================
+
+Step2: Create a subscription callback:¶
+We define the callback laserscan_callback.
+All topic callbacks have as input two elements:
+self: contains everything related to the class.
+msg: This is where the latest topic message will be stored.
+This msg object will have the structure defined in the LaserScan message:
+
+==========================================================================================================================================================================
+//-- 3.6 --//
