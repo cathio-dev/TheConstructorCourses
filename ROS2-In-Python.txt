@@ -268,3 +268,18 @@ This msg object will have the structure defined in the LaserScan message:
 //-- 3.7 --//
 
 FAZER EXERCICIO 3.3
+
+==========================================================================================================================================================================
+
+//-- 3.8 --// HOW TO CREATE INTERFACES
+
+REMEMBER: To Create a custom interface:¶
+To create a new interface, you have to follow the next steps:
+
+Create a new package or use any existing one.
+Create a directory named msg inside your package
+Inside this directory, create a file named name_of_your_message.msg (more information below)
+Modify the CMakeLists.txt file (more information below)
+Modify package.xml file (more information below)
+Compile and source
+Use it in your node
