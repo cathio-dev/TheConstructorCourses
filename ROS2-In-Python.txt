@@ -283,3 +283,28 @@ Modify the CMakeLists.txt file (more information below)
 Modify package.xml file (more information below)
 Compile and source
 Use it in your node
+
+//-- 4.3 --//
+
+//-- 4.4 --//
+
+create_service() method is used to Initialize a ROS2 Service. It has the following inputs, very similarly as Topic Publishers do:
+Trigger is the Service interface.
+name_service: As in topics, we can name the service in the Service server as we wish, because we are creating it right now.
+self.get_status_callback: Is the callback that will be called when we call the service server, using what is called a Service Request.
+
+source ~/ros2_ws/install/setup.bash
+ros2 service list | grep /get_robot_status
+ros2 service type <name_of_service>
+ros2 service call <name_of_service> <name_of_interface> <interface_request_message> : TO CALL A SERVICE
+
+response.message = (
+            f"Battery Level: {battery_level}%, "
+            f"Temperature: {temperature}°C, "
+            f"Camera: {'Operational' if camera_status else 'Faulty'}, "
+            f"Motor 1: {'Operational' if motor_statuses[0] else 'Faulty'}, "
+            f"Motor 2: {'Operational' if motor_statuses[1] else 'Faulty'}, "
+            f"Motor 3: {'Operational' if motor_statuses[2] else 'Faulty'}, "
+            f"Motor 4: {'Operational' if motor_statuses[3] else 'Faulty'}, "
+        )
+CODIGO MASSA EM PYTHON
