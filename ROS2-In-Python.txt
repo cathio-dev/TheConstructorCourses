@@ -308,3 +308,35 @@ response.message = (
             f"Motor 4: {'Operational' if motor_statuses[3] else 'Faulty'}, "
         )
 CODIGO MASSA EM PYTHON
+
+//-- 4.5 --//
+
+🧠 Classe principal: Node
+Você sempre cria suas próprias classes herdando de rclpy.node.Node.
+
+Métodos úteis de Node:
+Método	Descrição
+create_publisher(msg_type, topic, qos)	Cria um publisher.
+create_subscription(msg_type, topic, callback, qos)	Cria um subscriber.
+create_timer(timer_period_sec, callback)	Executa uma função periodicamente.
+create_service(srv_type, srv_name, callback)	Cria um service server.
+create_client(srv_type, srv_name)	Cria um service client.
+get_logger()	Retorna o logger do nó para imprimir mensagens.
+declare_parameter(name, default_value)	Declara um parâmetro do nó.
+get_parameter(name).value	Obtém o valor de um parâmetro declarado.
+
+
+🔧 Funções essenciais do rclpy
+Função	Descrição
+rclpy.init()	Inicializa o sistema ROS 2. Deve ser chamada antes de qualquer outra função ROS.
+rclpy.spin(node)	Mantém o nó ativo, ouvindo e processando callbacks.
+rclpy.shutdown()	Finaliza o sistema ROS 2 com segurança.
+
+//-- 4.10 --//
+
+//-- 5.0 --// CALL BACKS
+
+//-- 5.2 --//
+CMake Done
+
+//-- 5.3 --//
