@@ -340,3 +340,20 @@ rclpy.shutdown()	Finaliza o sistema ROS 2 com segurança.
 CMake Done
 
 //-- 5.3 --//
+CALL BACKS IN ROS2
+Priorizar nomear todas as funções, e fazer uma classe que execute tudo.
+
+//-- 5.4 --//
+
+function: create_timer(period, callback_function) "de quanto em quanto tempo se executa"
+
+//-- 5.5 --//
+Prática de callback functions
+Elas tem heredietariedade, dependendo do create_counter elas se ordenam em FIFO (First In First Out)
+
+//-- 6.1 --//
+ENTENDER THREADINGS, NÃO FAZER O ROBÔ CRASHAR E QUE ELE OPERE COM TODOS OS CALL BACKS NORMALMENTE
+
+//-- 6.4 --//
+Why do we need to call back groups?
+
