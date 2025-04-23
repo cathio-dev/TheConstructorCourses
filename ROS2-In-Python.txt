@@ -391,3 +391,33 @@ Começar action server
 
 //-- 7.11 --//
 Conclued Actions
+
+//-- 8.2 --//
+DEBUG: Detailed information, typically useful only during development.
+INFO: General information about the node’s operations.
+WARN: Indications that something unexpected happened, or might happen soon.
+ERROR: Errors that have occurred but are not necessarily fatal to the node.
+FATAL: Severe errors that will likely cause the node to terminate.
+
+BASIC ROS NODE:
+
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='logs_test',
+            executable='logger_example',
+            emulate_tty=True,
+            output='screen'
+        )
+    ])
+
+- You can separate LOG levels to get only the necessary information.
+
+//-- 8.3 --//
+
+DEBUG WITH RVIZ
+rviz2 in terminal
+END IN TOPIC 3.
