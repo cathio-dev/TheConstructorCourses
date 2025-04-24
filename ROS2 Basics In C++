@@ -1,1 +1,55 @@
-BEGGINING
+1.3   What You Will Learn In This Course
+In this course, you will review the following topics:
+
+Basic Concepts of ROS2: Packages, launch files, nodes, client libraries, etc.
+How Topics work: Publishers and Subscribers
+Node composition and how to create components in ROS2
+How Services work: Clients and Servers
+How to manage Multithreading in ROS2 (Executors and Callback Groups)
+How Actions work: Clients and Servers
+Basic debugging tools: Logging system, RVIZ2.
+
+//-- 2.4 --//
+
+CREATE PKG: ros2 pkg create my_package --build-type ament_cmake --dependencies rclcpp
+
+//-- 2.6 --//
+
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='teleop_twist_keyboard',
+            executable='teleop_twist_keyboard',
+            output='screen',
+            emulate_tty=True),
+    ])
+
+//-- 2.7 --//
+
+FIRST PROGRAM
+
+// Import the rclcpp client library
+#include "rclcpp/rclcpp.hpp"
+
+int main(int argc, char * argv[])
+{
+  // Initialize the ROS2 communication
+  rclcpp::init(argc, argv);
+  
+  // Create a ROS2 node named ObiWan
+  auto node = rclcpp::Node::make_shared("ObiWan");
+
+  // Print a message to the terminal
+  RCLCPP_INFO(node->get_logger(), "Help me Obi-Wan Kenobi, you're my only hope");
+  
+  // Shutdown the ROS2 communication
+  rclcpp::shutdown();
+  return 0;
+}
+
+PS: AUTO -> define automaticamente o tipo de acordo com o que recebe
+
+//-- 2.8 --// COMEÇAR
