@@ -421,3 +421,18 @@ def generate_launch_description():
 DEBUG WITH RVIZ
 rviz2 in terminal
 END IN TOPIC 3.
+
+//-- 8.5 --// 
+Como me localizar sobre os topics, e qual os services, nodes?
+
+ros2 doctor
+package: ros2cli
+
+This is the general structure of a UserWarning looks like:
+
+<path>: <line>: UserWarning: <message>
+
+//-- 9.1 --//
+
+What next?
+-> ROS2 in C++
