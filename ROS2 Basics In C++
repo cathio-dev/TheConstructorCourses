@@ -52,4 +52,27 @@ int main(int argc, char * argv[])
 
 PS: AUTO -> define automaticamente o tipo de acordo com o que recebe
 
-//-- 2.8 --// COMEÇAR
+//-- 2.8 --//
+
+Expkication about CMakeLists.txt
+
+//-- 2.9 --//
+
+Nodes
+ros2 node info /(node_name): get info
+
+//-- 3.2 --//
+Topic Publishers
+
+ros2 topic list
+
+ros2 topic echo <topic_name>: To read the information that is being published on a Topic, use the following command
+
+//-- 3.4 --//
+Messages (interfaces)
+
+ros2 interface show std_msgs/msg/Int32: information about the interface
+
+
+
+
