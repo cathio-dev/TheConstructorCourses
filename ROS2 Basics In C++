@@ -76,4 +76,266 @@ ros2 interface show std_msgs/msg/Int32: information about the interface
 //-- 3.12 --//
 CONCLUDED and did the topics_quiz
 
+//-- 4.3 --//
+Executors
+  rclcpp::executors::SingleThreadedExecutor executor; #Create an object executor responsible for the execution of Callbacks
+
+The example above showcases how to add a Node to an Executor. It requires three instructions:
+
+Initialize an Executor object
+Add a Node to the Executor
+Spin the Executor to look for available work and complete it
+
+//-- 4.5 --//
+
+The Single-threaded Executor uses one thread to execute all the Node instructions.
+
+The Multi-threaded Executor creates a variable number of threads that allow multiple messages/events to process in parallel.
+
+The Static Single-threaded Executor performs a Node scan only once when the Node is added to the Executor. Therefore, use it only with Nodes that create all related Callbacks during initialization.
+
+//-- 4.6 --//
+
+Single Thread FIFO:
+
+cmake_minimum_required(VERSION 3.8)
+project(executors_exercises_pkg)
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(nav_msgs REQUIRED)
+
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  # the following line skips the linter which checks for copyrights
+  # comment the line when a copyright and license is added to all source files
+  set(ament_cmake_copyright_FOUND TRUE)
+  # the following line skips cpplint (only works in a git repo)
+  # comment the line when this package is in a git repo and when
+  # a copyright and license is added to all source files
+  set(ament_cmake_cpplint_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
+# Build
+add_executable(executor_example_1_node src/executor_example_1.cpp)
+ament_target_dependencies(executor_example_1_node rclcpp)
+
+add_executable(executor_example_2_node src/executor_example_2.cpp)
+ament_target_dependencies(executor_example_2_node rclcpp nav_msgs)
+
+add_executable(executor_example_3_node src/executor_example_3.cpp)
+ament_target_dependencies(executor_example_3_node rclcpp nav_msgs)
+
+
+# Install
+install(TARGETS
+   executor_example_1_node
+   executor_example_2_node
+   executor_example_3_node
+   DESTINATION lib/${PROJECT_NAME}
+)
+
+
+ament_package()
+
+RESULT:
+
+[INFO] [1745932274.023814923] [odom_subscriber]: odom_subs_node INFO...
+[INFO] [1745932274.023952701] [slow_timer_subscriber]: slow_timer_node INFO...
+[INFO] [1745932277.523364897] [slow_timer_subscriber]: TICK
+[INFO] [1745932280.523826212] [slow_timer_subscriber]: TICK
+[INFO] [1745932280.523977659] [odom_subscriber]: Odometry=['0.697193','-0.793636','0.009380']
+[INFO] [1745932283.524096896] [slow_timer_subscriber]: TICK
+[INFO] [1745932283.524437122] [odom_subscriber]: Odometry=['0.697195','-0.793636','0.009380']
+[INFO] [1745932286.524796840] [slow_timer_subscriber]: TICK
+[INFO] [1745932286.524929041] [odom_subscriber]: Odometry=['0.697197','-0.793636','0.009380']
+[INFO] [1745932289.525070701] [slow_timer_subscriber]: TICK
+
+Odom topic dont publishes constantly, cause of the use of Single Thread, the timer_callback function interrupts the sequenc of Odom.
+
+//-- 4.7 --//
+MultiThreading: THE INVERSE
+
+INFO] [1745935317.829576633] [slow_timer_subscriber]: TICK
+[INFO] [1745935317.836783825] [odom_subscriber]: Odometry=['0.702640','-0.793622','0.009380']
+[INFO] [1745935317.848104023] [odom_subscriber]: Odometry=['0.702640','-0.793622','0.009380']
+[INFO] [1745935317.859778064] [odom_subscriber]: Odometry=['0.702640','-0.793622','0.009380']
+[INFO] [1745935317.870211955] [odom_subscriber]: Odometry=['0.702640','-0.793622','0.009380']
+[INFO] [1745935317.879459533] [odom_subscriber]: Odometry=['0.702640','-0.793622','0.009380']
+[INFO] [1745935317.890425604] [odom_subscriber]: Odometry=['0.702640','-0.793622','0.009380']
+[INFO] [1745935317.900239562] [odom_subscriber]: Odometry=['0.702641','-0.793622','0.009380']
+[INFO] [1745935317.910289772] [odom_subscriber]: Odometry=['0.702641','-0.793622','0.009380']
+
+//-- 4.8 --// 
+
+Two nodes in two single threadeds
+you can only have ONE SINGLE EXECUTOR per binary file.
+SingleThreadedExecutors are less CPU intensive than MultiThreadedExecutors. So if it covers all your needs, it is preferable.
+
+Use multi if its necessary
+
+//-- 4.9 --// 
+Call back groups
+1 class with 2 callbacks, being processed by a MultiThread
+Multi-Threaded Executor (if not specified), creates one thread per node, so it isnt able to run 2 call backs, only the first
+ SO WE IMPLEMENT CALL BACK GROUPS, REENTRANT OR MUTUALLY EXCLUSIVE
+
+//-- 4.10 --//
+
+REENTRANT: 
+
+#include <rclcpp/rclcpp.hpp>
+#include <unistd.h>
+
+using namespace std::chrono_literals;
+
+class TwoTimer : public rclcpp::Node {
+public:
+  TwoTimer(float sleep_timer1, float sleep_timer2)
+      : Node("slow_timer_subscriber") {
+          
+    // Initialize one Reentrant callback group object
+    callback_group_ = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
+
+    this->wait_time1 = sleep_timer1;
+    this->wait_time2 = sleep_timer2;
+
+    timer1_ = this->create_wall_timer(500ms, std::bind(&TwoTimer::timer1_callback, this), callback_group_);
+    timer2_ = this->create_wall_timer(500ms, std::bind(&TwoTimer::timer2_callback, this), callback_group_);
+  }
+
+private:
+  void timer1_callback() {
+    RCLCPP_INFO(this->get_logger(), "Timer 1 Callback Start");
+    sleep(this->wait_time1);
+    RCLCPP_INFO(this->get_logger(), "Timer 1 Callback End");
+  }
+
+  void timer2_callback() {
+    RCLCPP_INFO(this->get_logger(), "Timer 2 Callback Start");
+    sleep(this->wait_time2);
+    RCLCPP_INFO(this->get_logger(), "Timer 2 Callback End");
+  }
+
+  rclcpp::CallbackGroup::SharedPtr callback_group_;
+  rclcpp::TimerBase::SharedPtr timer1_;
+  rclcpp::TimerBase::SharedPtr timer2_;
+  float wait_time1;
+  float wait_time2;
+};
+
+int main(int argc, char *argv[]) {
+  rclcpp::init(argc, argv);
+
+  // Instantiate the Node
+  float sleep_time1 = 1.0;
+  float sleep_time2 = 3.0;
+  std::shared_ptr<TwoTimer> two_timer_node =
+      std::make_shared<TwoTimer>(sleep_time1, sleep_time2);
+
+  // Initialize one MultiThreadedExecutor object
+  rclcpp::executors::MultiThreadedExecutor executor;
+  executor.add_node(two_timer_node);
+  executor.spin();
+
+  rclcpp::shutdown();
+  return 0;
+}
+
+//-- 4.11 --// 
+Mutualyexclusive:
+
+#include <rclcpp/rclcpp.hpp>
+#include <unistd.h>
+
+using namespace std::chrono_literals;
+
+class TwoTimer : public rclcpp::Node {
+public:
+  TwoTimer(float sleep_timer1, float sleep_timer2)
+      : Node("slow_timer_subscriber") {
+
+    // Initialize one MutuallyExclusive callback group object
+    callback_group_ = this->create_callback_group(
+        rclcpp::CallbackGroupType::MutuallyExclusive);
+
+    this->wait_time1 = sleep_timer1;
+    this->wait_time2 = sleep_timer2;
+
+    timer1_ = this->create_wall_timer(
+        500ms, std::bind(&TwoTimer::timer1_callback, this), callback_group_);
+    timer2_ = this->create_wall_timer(
+        500ms, std::bind(&TwoTimer::timer2_callback, this), callback_group_);
+  }
+
+private:
+  void timer1_callback() {
+    RCLCPP_INFO(this->get_logger(), "Timer 1 Callback Start");
+    sleep(this->wait_time1);
+    RCLCPP_INFO(this->get_logger(), "Timer 1 Callback End");
+  }
+
+  void timer2_callback() {
+    RCLCPP_INFO(this->get_logger(), "Timer 2 Callback Start");
+    sleep(this->wait_time2);
+    RCLCPP_INFO(this->get_logger(), "Timer 2 Callback End");
+  }
+
+  rclcpp::CallbackGroup::SharedPtr callback_group_;
+  rclcpp::TimerBase::SharedPtr timer1_;
+  rclcpp::TimerBase::SharedPtr timer2_;
+  float wait_time1;
+  float wait_time2;
+};
+
+int main(int argc, char *argv[]) {
+
+  rclcpp::init(argc, argv);
+
+  // Instantiate the Node
+  float sleep_time1 = 1.0;
+  float sleep_time2 = 3.0;
+  std::shared_ptr<TwoTimer> two_timer_node =
+      std::make_shared<TwoTimer>(sleep_time1, sleep_time2);
+
+  // Initialize one MultiThreadedExecutor object
+  rclcpp::executors::MultiThreadedExecutor executor;
+  executor.add_node(two_timer_node);
+  executor.spin();
+
+  rclcpp::shutdown();
+  return 0;
+}
+
+//-- 4.12 --//
+MutuallyExclusive: execute one thread for 1 call back, the other dont run
+Reentrant, execute normaly the call backs
+Multiple MutuallyExclusive: execute call backs normally, one call back group for each call back function
+
+//-- 5.1 --//
+
+What Services are and how they work
+Basic Service commands to interact with them
+The role of a Service Client in making requests
+The role of a Service Server in handling requests
+How to create custom interfaces for tailored communication
+
+//-- 5.2 --// 
+Why services?
+-> Service Server Only run when receive an explicity request by a service client
+-> In face recognition case, waste of resources run the code continuously without any one in the camera. Service would only let the program starts when someone appears.
+Client = quem pede a informação
+Server = quem processa e retorna uma resposta
+
+//-- 5.3 --//
+Basic Service Commands (START)
+
+
+
 
