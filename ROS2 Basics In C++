@@ -335,7 +335,36 @@ Server = quem processa e retorna uma resposta
 
 //-- 5.3 --//
 Basic Service Commands (START)
+ros2 service list
+ros2 service call <service_name> <service_type> <value>
+ros2 service type <service_name> descobrir pra usar no interface show
+ros2 interface show <service_type> : para descobrir o que passar de valor
 
+<request>
+---
+<response>
 
+se o request for empty, não tem que passar nada em valor, no caso do /moving
 
+//-- 5.4 --//
 
+everytime we use launch:
+
+CMAKE:
+
+add_executable(service_client_node src/service_client.cpp)
+ament_target_dependencies(service_client_node rclcpp std_srvs)
+
+install(TARGETS
+   service_client_node
+   DESTINATION lib/${PROJECT_NAME}
+ )
+
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
+//-- 5.9 --//
+Custom Service Interfaces (START)
