@@ -368,3 +368,39 @@ install(DIRECTORY
 
 //-- 5.9 --//
 Custom Service Interfaces (START)
+
+Did it.
+
+//-- 5.10 --//
+
+//-- 6.1 --//
+ROS2 ACTIONS, similar to services.
+
+feedback mensages.
+
+//-- 6.2 --//
+
+In summary, the workflow goes like this:
+
+The Client sends a goal to the Server. This will trigger the "start" of the Action.
+
+The Server sends feedback to the Client meanwhile the Action is taking place.
+
+Once the Action finishes, the Server returns a response to the Client.
+
+//-- 6.3 --//
+
+ros2 action list
+ros2 action info /(action name)
+ros2 action info /move_robot_as -t -> for type: <package_name>/action/<interface_name>
+ros2 interface show t3_action_msg/action/Move
+ros2 action send_goal /move_robot_as t3_action_msg/action/Move "{secs: 5}"
+
+FOR FEEDBACK IN REAL TIME: "-f"
+ros2 action send_goal -f /move_robot_as t3_action_msg/action/Move "{secs: 5}"
+
+//-- 6.4 --//
+
+The message of a Topic is composed of a single part: the information the Topic provides.
+The message of a Service has two parts: the request and the response.
+The message of an Action Server is divided into three parts: the goal, the result, and the feedback.
