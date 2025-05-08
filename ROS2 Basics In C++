@@ -553,3 +553,35 @@ Iniciates wth the goal that action client sends
 
 //-- 6.9 --// 
 action interface
+
+//-- 6.11 --//
+
+ Regra prática:
+No Server:
+Você cria a Action com esse nome quando instancia o Action Server:
+
+cpp
+// Pseudocódigo - não é código completo!
+server_ = create_server<Distance>(
+    "/distance_as",  // <- NOME DA ACTION AQUI
+    handle_goal,
+    handle_cancel,
+    handle_accept);
+No Client:
+Você usa o mesmo nome para se conectar:
+
+cpp
+// Pseudocódigo
+client_ = create_client<Distance>("/distance_as");
+💡 Por que o mesmo nome?
+É como um número de telefone: tanto quem liga (Client) quanto quem atende (Server) precisam usar o mesmo número para se comunicarem.
+
+//-- 7.2 --//
+
+Debugging Tools (Igual o de python)
+
+//-- 7.3 --//
+
+START
+
+
