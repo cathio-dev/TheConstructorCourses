@@ -582,6 +582,34 @@ Debugging Tools (Igual o de python)
 
 //-- 7.3 --//
 
-START
+DEBBUGING TOOLS
 
+//-- 8.1 --//
+Node Composition
 
+//-- 8.3 --// 
+Run-time Composition
+
+and Compile-time Composition
+
+//-- 8.4 --//
+
+ros2 component types
+
+ros2 component list
+
+ros2 run rclcpp_components component_container : start the component container
+
+ros2 component load /ComponentManager <pkg_name> <component_name>: load a component
+
+ros2 component unload /ComponentManager <component_id>: unload a component
+
+//-- 8.5 --//
+
+When using a launch file to load components, it is not necessary to unload them using the command ros2 component unload. When you stop the launch file execution (by pressing Ctr+C), all components are automatically unloaded, alongside with the component container.
+
+//-- 8.6 --//
+
+//-- 8.8 --//
+
+THE END.
