@@ -12,3 +12,11 @@ Start
 //-- 1.6 --//
 
 Quiz -> Create Robot Model
+
+//-- 2.5 --//
+Topic and TYPE /robot_description. Next, click on the black triangle at the left of Description Topic to view more fields. Set Reliability Policy to Reliable and Durability Policy to Transient Local.
+
+//-- 2.7 --//
+And here with two links and a joint, the minimum to start the publishing of TFs.
+//-- 2.10 --//
+Começar
