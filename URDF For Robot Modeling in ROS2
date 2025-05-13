@@ -20,3 +20,65 @@ Topic and TYPE /robot_description. Next, click on the black triangle at the left
 And here with two links and a joint, the minimum to start the publishing of TFs.
 //-- 2.10 --//
 Começar
+
+<visual>
+    <origin rpy="0 0 0" xyz="0 0 0.1" />
+        <geometry>
+            <box size="0.1 0.1 0.1"/>
+        </geometry>
+        <material name="blue">
+            <color rgba="0.006 0.151 0.581 1"/>
+        </material>
+    </visual>
+
+  Materials.
+
+//-- 2.11 --//
+
+Meshes: Modelo pronto
+
+<link name="head_link">
+    <visual>
+    <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://urdfbot_description/meshes/urdfbot_head.dae" scale="0.1 0.1 0.1"/>
+      </geometry>
+    </visual>
+  </link>
+
+//-- 2.12 --//
+
+<limit> (required only for revolute and prismatic joint)¶
+JOINT:
+
+<joint name="upper_arm_r_link_to_claw_a_r_link_joint" type="revolute">
+        <origin xyz="0 0 -0.065" rpy="-1.57 0 -1.57"/> <!-- Com base no parente--> Posição relativa
+        <parent link="lower_arm_r_link"/>
+        <child link="claw_a_r_link"/>
+        <axis xyz="0 0 1"/> 
+        <limit effort="100" velocity="1.0" lower="-0.7" upper="0.7"/>
+
+LINK:
+
+<link name="claw_b_r_link">
+        <visual>
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <geometry>
+            <mesh filename="package://urdfbot_description/meshes/urdfbot_claw.dae" scale="0.1 0.1 0.1"/>
+        </geometry>
+        </visual>
+    </link>
+    </joint>
+
+MIMIC:
+<mimic joint="upper_arm_r_link_to_claw_a_r_link_joint" multiplier="1.0" offset="0.0"/>
+offset = tira do eixo em radianos
+multiplier, quantas vezes a outra parte vai seguir
+
+<dynamics damping="0.5"/>  <!-- Quanto maior, mais rápido o robô "para" --
+
+<joint name="my_joint" type="revolute">
+    <dynamics friction="1.0"/>  <!-- Quanto maior, mais força para mover -->
+</joint>
+
+
