@@ -92,3 +92,10 @@ mkdir models
 
 //-- 4.3 --//
 Start
+Create Worlds
+
+mkdir worlds
+touch worlds/box_bot_empty.world
+
+//-- 4.4 --//
+Start
