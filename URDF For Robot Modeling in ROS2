@@ -81,4 +81,14 @@ multiplier, quantas vezes a outra parte vai seguir
     <dynamics friction="1.0"/>  <!-- Quanto maior, mais força para mover -->
 </joint>
 
+//-- 4.2 --//
+Start Gazebo
+cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_cmake my_box_bot_gazebo --dependencies rclpy gazebo_ros my_box_bot_description
+cd my_box_bot_gazebo
 
+TO ORGANIZE:
+mkdir models
+
+//-- 4.3 --//
+Start
