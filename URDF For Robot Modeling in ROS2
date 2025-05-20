@@ -99,3 +99,21 @@ touch worlds/box_bot_empty.world
 
 //-- 4.4 --//
 Start
+
+Robotics Physiscs
+
+Collisions, to meshes and geometry
+
+collisions normally are geometrys, in the case of the Box Bot, similar to a box of 0.1³ volume
+
+YOU CAN USE THE OWN MODEL, but demans operacional computing cost
+
+    --- INERTIA ---
+        There are three main moments of inertia:
+
+        Ixx: Around the X-axis
+        Iyy: Around the Y-axis
+        Izz: Around the Z-axis
+
+
+
