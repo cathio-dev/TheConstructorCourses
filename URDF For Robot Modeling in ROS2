@@ -175,3 +175,89 @@ Publish the values that involve motion: Like wheels.
 
 //-- 5.6 --//
 Start
+
+<joint name="laser_scan_link_joint" type="prismatic">
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.05"/>
+        <parent link="chassis"/>
+        <child link="laser_scan_link"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-0.1" upper="0.0" effort="20.0" velocity="2.0"/>
+        <dynamics damping="0.1" friction="1.0"/>
+    </joint>
+Here
+
+Me explique cada função
+Here's a detailed explanation of each part of your prismatic joint in URDF, designed for a laser scanner (like LiDAR) attached to a robot's chassis:
+
+1. <joint name="laser_scan_link_joint" type="prismatic">
+name: Identifies the joint as laser_scan_link_joint (useful for debugging/control).
+
+type="prismatic": Specifies a linear sliding joint (moves in a straight line, unlike revolute for rotation).
+
+2. <origin rpy="0 0 0" xyz="0.0 0.0 0.05"/>
+xyz="0.0 0.0 0.05": Positions the laser 5 cm above the chassis link along the Z-axis.
+
+rpy="0 0 0": No rotation (Roll=0, Pitch=0, Yaw=0).
+
+3. <parent link="chassis"/> & <child link="laser_scan_link"/>
+parent: The joint is attached to the robot's base (chassis).
+
+child: The joint moves the laser_scan_link (where your LiDAR model is defined).
+
+4. <axis xyz="0 0 1"/>
+Defines the direction of linear motion:
+
+xyz="0 0 1" → Movement along the Z-axis (up/down).
+
+(Example: xyz="1 0 0" would slide horizontally along the X-axis).
+
+5. <limit lower="-0.1" upper="0.0" effort="20.0" velocity="2.0"/>
+lower="-0.1": Joint can slide 10 cm downward from the origin.
+
+upper="0.0": Maximum position is the origin (0 cm).
+
+effort="20.0": Max force the joint can exert (20 Newtons).
+
+velocity="2.0": Max sliding speed (2 m/s).
+
+6. <dynamics damping="0.1" friction="1.0"/>
+damping="0.1": Acts like a "shock absorber" to smooth motion.
+
+friction="1.0": Resistance to sliding (higher = harder to move).
+
+PRISMATIC =  TRANSLATION
+CONTINUOUS = ANGLEs
+
+<!-- Position Config -->
+        <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+
+        <joint name="laser_scan_link_joint">
+            <command_interface name="position">
+            <param name="min">-0.05</param>
+            <param name="max">0.0</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+
+    </ros2_control>
+
+WE PUT HERE THE LINKS WE WANT CONTROL
+
+//-- 5.8 --//
+
+CONTROL VELOCITY
+
+touch my_box_bot_gazebo/launch/control_position_velocity.launch.py
+touch my_box_bot_gazebo/launch/spawn_robot_ros2_control_velocity.launch.xml
+touch my_box_bot_description/config/controller_position_velocity.yaml
+touch my_box_bot_description/launch/urdf_visualize_control_velocity.launch.py
+touch my_box_bot_description/urdf/box_bot_control_complete_velocity.urdf
+
+
+//-- 6.1 --//
+START
