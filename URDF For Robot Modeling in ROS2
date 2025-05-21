@@ -261,3 +261,7 @@ touch my_box_bot_description/urdf/box_bot_control_complete_velocity.urdf
 
 //-- 6.1 --//
 START
+FINALMENTE LIDAR, CAMERA, E IMU
+
+//-- 6.2 --//
+START Lidar Plugin
