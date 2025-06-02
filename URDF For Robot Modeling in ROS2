@@ -265,3 +265,9 @@ FINALMENTE LIDAR, CAMERA, E IMU
 
 //-- 6.2 --//
 START Lidar Plugin
+
+//-- 6.5 --//
+
+In this section, we will learn how to add an Inertial Measurement Unit (IMU) sensor to an existing robot URDF file. The IMU sensor provides information about the robot's angular velocity and linear acceleration, which can be useful for various applications such as motion control and localization.
+
+
