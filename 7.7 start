@@ -1,4 +1,15 @@
-//-- 1.1 --//
+//-- 1.1 --//<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_box_bot">
+
+    <!-- XACRO PROPERTY -->
+    <xacro:property name="body_width" value="0.1"/>
+    <xacro:property name="body_lenght" value="0.1"/>
+    <xacro:property name="body_height" value="0.1"/>
+
+    <xacro:property name="wheel_width" value="0.001"/>
+    <xacro:property name="wheel_radius" value="0.035"/>
+…
+</robot>
 Introduction
 
 Unified Robot Description Format
@@ -344,5 +355,45 @@ def generate_launch_description():
 "COLOCA OS NODES EM VARIAVEIS E COLCOA EM FORMA DE VARIAVEL NO RETURN LAUNCH DESCRIPTION"
 
 //-- 7.5 --//
-START
+basicamente variaveis de xacro 
+<xacro:property name="body_width" value="0.1"/>
+<xacro:property name="body_lenght" value="0.1"/>
+<xacro:property name="body_height" value="0.1"/>
+<xacro:property name="wheel_width" value="0.001"/>
+<xacro:property name="wheel_radius" value="0.035"/>
 
+//-- 7.6 --//
+
+REUSE FUNCTIONS, EXAMPLE WITH WHEEL:
+
+<xacro:macro name="wheel" params="wheel_name">
+  <link name="${wheel_name}">   
+      <visual>
+        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="0.001" radius="0.035"/>
+        </geometry>
+        <material name="red"/>
+      </visual>
+
+      <collision>
+        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+        <mass value="0.05"/>
+        <inertia ixx="1.531666666666667e-05" ixy="0" ixz="0" iyy="1.531666666666667e-05" iyz="0" izz="3.0625000000000006e-05"/>
+      </inertial>
+
+  </link>
+
+</xacro:macro>
+
+PARA INVOCAR: <xacro:wheel wheel_name="left_wheel"/>
+
+//-- 7.7 --//
+XACRO Conditional Blocks
