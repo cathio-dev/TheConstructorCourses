@@ -397,3 +397,23 @@ PARA INVOCAR: <xacro:wheel wheel_name="left_wheel"/>
 
 //-- 7.7 --//
 XACRO Conditional Blocks
+é como se fosse if else, com if unless
+
+<xacro:arg name="indoor_robot" default="true"/>
+...
+<xacro:if value="${indoor_robot}">
+  <gazebo>
+    <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+  </gazebo>
+</xacro:if>
+<xacro:unless value="${indoor_robot}">
+  <gazebo>
+    <plugin filename="libgazebo_ros_gps_sensor.so" name="$gps_plugin">
+  </gazebo>
+</xacro:unless>
+
+//-- 7.8 --//
+
+<xacro:include filename="$(find my_box_bot_description)/urdf/box_bot.gazebo.xacro" />
+
+BASICAMENTE: dividir um CSS, pra um arquivo xacro não ficar gigante.
