@@ -417,3 +417,6 @@ XACRO Conditional Blocks
 <xacro:include filename="$(find my_box_bot_description)/urdf/box_bot.gazebo.xacro" />
 
 BASICAMENTE: dividir um CSS, pra um arquivo xacro não ficar gigante.
+//-- 8.8 --// 
+
+MEXENDO NO ON SHAPE
