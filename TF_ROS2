@@ -9,3 +9,26 @@
 
 //-- 2.1 --//
   2.1 START
+
+//-- 2.4 --//
+View TF's with pdf: ros2 run tf2_tools view_frames
+
+//-- 2.5 --//
+With ros2 rn rqt_tf_tree rqt_tf_tree
+Now, this TF is not static, but it can be refreshed to show the current status of the TF tree. Press the refresh button each time you want the latest update.
+
+//-- 2.6 --//
+The tf2_echo command has to be run with the following general structure:
+
+ros2 run tf2_ros tf2_echo [reference_frame] [target_frame]
+In this scheme:
+
+[reference_frame] is where you start the transform, for instance rgb_camera_link_frame.
+
+[target_frame] is where you want to finish the transform, for instance, turtle_chassis.
+
+This means you want to know the translation and rotation from the reference_frame to the target_frame.
+
+//-- 2.7 --//
+
+Start
