@@ -31,4 +31,14 @@ This means you want to know the translation and rotation from the reference_fram
 
 //-- 2.7 --//
 
-Start
+Using TF frame of turtle, and put cambot to follow the turtle
+
+Viewing TF Frames in RVIZ
+
+//-- 2.8 --//
+  Real Robot Project (No Time) - fiz a parte 1
+
+//-- 3.4 --//
+GO BACK TO 35 MIN PRATICE
+
+tf2_monitor: used to check the delay between TF's  
