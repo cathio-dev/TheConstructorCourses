@@ -1,0 +1,6 @@
+//-- 1.1 --//
+  Welcome to the Intermediate ROS 2 course!
+
+In this course, you will explore key concepts that improve execution, communication, and configuration in ROS 2, enabling you to develop more efficient and scalable robotic applications. You'll dive into topics such as launch files, node parameters, threading, callback management, Quality of Service (QoS), Data Distribution Service (DDS), and managed nodes, all of which are essential for optimizing real-world robotic systems.
+
+By the end of this course, you’ll be equipped to work with advanced ROS 2 functionalities, making your robotic solutions more robust and adaptable.
