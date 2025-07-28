@@ -51,3 +51,9 @@ ros2 run tf2_ros static_transform_publisher --x x --y y --z z --yaw yaw --pitch 
 
 // XYZW Quaternion
 ros2 run tf2_ros static_transform_publisher --x x --y y --z z --qx qx --qy qy --qz qz --qw qw --frame-id frame_id --child-frame-id child_frame_id
+
+//-- 4.3 --// Robot State Publisher
+
+Publishes the TF and the description of the robot, very important
+To put in Gazebo and RVIZ
+
