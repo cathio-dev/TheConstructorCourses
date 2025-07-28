@@ -15,3 +15,84 @@ By the end of this course, you’ll be equipped to work with advanced ROS 2 func
     Exploring Data Distribution Service (DDS) in ROS 2
     Implementing and managing Managed Nodes in ROS 2
 
+//-- 2.2 --//
+
+  message_info = launch.actions.LogInfo(
+        msg=str(rviz_config_dir))
+
+...
+
+
+return LaunchDescription(
+        [
+            ...,
+            message_info
+        ]
+    )
+LogInfo, allows you to post a message inside the ROS2 logging system from a launch file.
+
+In this case, the message to be printed is the full path to the Rviz config file. This can be useful to check if we are loading the proper config file.
+
+In order to print a message during launch time:
+
+you create a LogInfo variable, with argument (msg='the string message you want to print').
+then you provide that variable to the LaunchDescription.
+===============================================================
+name_of_launch_object = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(MY_LAUNCH_FILE_PATH)
+        )
+    )
+
+name_of_launch_object_2 = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(MY_LAUNCH_FILE_PATH_2)
+        )
+    )
+    
+...
+
+
+return LaunchDescription([
+        name_of_launch_object,
+        name_of_launch_object_2,
+
+    ])
+
+BASIC STRUCTURE:
+
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+import os
+
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+def generate_launch_description():
+
+    pkg_box_bot_gazebo = get_package_share_directory('launch_tests_pkg')
+
+    move_robot = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(pkg_box_bot_gazebo, 'launch',
+                         'move.launch.py'),
+        )
+    )
+
+    start_rviz = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(pkg_box_bot_gazebo, 'launch', 'start_rviz.launch.py'),
+        )
+    )
+
+    return LaunchDescription([
+        move_robot,
+        start_rviz,
+
+    ])
+
+======================================================================================
+
+//-- 3.3 --//
+  START,
+  ASK HELP ABOUT THE LAST
