@@ -4,3 +4,14 @@
 In this course, you will explore key concepts that improve execution, communication, and configuration in ROS 2, enabling you to develop more efficient and scalable robotic applications. You'll dive into topics such as launch files, node parameters, threading, callback management, Quality of Service (QoS), Data Distribution Service (DDS), and managed nodes, all of which are essential for optimizing real-world robotic systems.
 
 By the end of this course, you’ll be equipped to work with advanced ROS 2 functionalities, making your robotic solutions more robust and adaptable.
+
+//-- 1.3 --//
+  What I will learn:
+    How to create different types of launch files in ROS 2
+    Working with parameters to configure ROS 2 nodes
+    Threading in ROS 2 for managing concurrent tasks
+    Callback management for efficient message handling
+    Understanding Quality of Service (QoS) and its impact on communication
+    Exploring Data Distribution Service (DDS) in ROS 2
+    Implementing and managing Managed Nodes in ROS 2
+
