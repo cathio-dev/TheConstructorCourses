@@ -110,4 +110,42 @@ def generate_launch_description():
 
 //-- 3.3 --//
 
-Start
+//-- 4.1 --//
+
+In ROS 2, parameters provide a way to configure and customize nodes at runtime, making your robots more flexible and adaptable to different environments and tasks. Parameters allow you to set values for variables that can affect the behavior of nodes without needing to modify the code itself. This makes it easier to adapt to changing conditions, tune robot behaviors, or adjust configurations across different systems.
+
+In this unit, you will learn how to work with parameters in ROS 2, including how to define, set, get, and update parameters within your nodes. You will also explore the different types of parameters, their usage, and how they help you create more dynamic and reusable robotic applications.
+
+By the end of this unit, you will be able to confidently work with parameters in ROS 2 to improve your robot's flexibility and performance.
+
+//-- 4.4 --//
+Parameters
+
+auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+    param_desc.description = "Sets the velocity (in m/s) of the robot.";
+    this->declare_parameter<std::double_t>("velocity", 0.0, param_desc);
+
+after the command: ros2 param list:
+
+/param_vel_node:
+  qos_overrides./parameter_events.publisher.depth
+  qos_overrides./parameter_events.publisher.durability
+  qos_overrides./parameter_events.publisher.history
+  qos_overrides./parameter_events.publisher.reliability
+  use_sim_time
+  velocity
+
+----------------------------------------------------------------------
+
+after ros2 param describe:
+
+user:~/ros2_ws$ ros2 param describe /param_vel_node velocity
+Parameter name: velocity
+  Type: double
+  Description: Sets the velocity (in m/s) of the robot.
+  Constraints:
+
+user:~/ros2_ws$ ros2 param
+delete    describe  dump      get       list      load      set
+user:~/ros2_ws$ ros2 param
+
