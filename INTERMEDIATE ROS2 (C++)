@@ -149,3 +149,130 @@ user:~/ros2_ws$ ros2 param
 delete    describe  dump      get       list      load      set
 user:~/ros2_ws$ ros2 param
 
+
+//-- 4.9 --//
+
+  basic launch structure:
+
+  from launch import LaunchDescription
+from launch_ros.actions import Node
+
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='parameter_tests',
+            executable='param_vel_node',
+            name='param_vel_node',
+            output='screen',
+            emulate_tty=True,
+            parameters=[
+                {'velocity': 0.2}
+            ]
+        )
+    ])
+
+// Passa o parametro automaticamente
+
+//-- 4.10 --//
+
+PARAMETER IF
+
+class VelParam : public rclcpp::Node {
+public:
+  rcl_interfaces::msg::SetParametersResult
+  parametersCallback(const std::vector<rclcpp::Parameter> &parameters) {
+    rcl_interfaces::msg::SetParametersResult result;
+    result.successful = false;
+    result.reason = "";
+    for (const auto &parameter : parameters) {
+      if (parameter.get_name() == "velocity" && parameter.as_double() > 0.2) {
+        RCLCPP_INFO(this->get_logger(), "Parameter 'velocity' not changed!");
+        result.reason = "Parameter 'velocity' cannot be higher than 0.2";
+      } else {
+        RCLCPP_INFO(this->get_logger(), "Parameter 'velocity' changed!");
+        result.successful = true;
+        result.reason = "Parameter 'velocity' is lower than 0.2";
+      }
+    }
+    return result;
+  }
+
+// so conseguimos mandar o parametro se suprir a necessidade do IF, muito interessante.
+
+
+//-- 5.1 --//
+
+Introduction:
+
+Modern robotics applications often require multiple tasks to run simultaneously, such as processing sensor data, executing motion planning, and communicating with other systems. This is where multi-threading becomes essential. Multi-threading allows different parts of a program to execute concurrently, improving performance and responsiveness.
+
+In ROS 2, executors, callback groups, and WaitSet are key mechanisms for managing multi-threaded execution. The WaitSet allows you to wait for multiple events simultaneously, enabling more efficient handling of asynchronous tasks. By leveraging multi-threading, executors, callback groups, and WaitSet, you will enhance the efficiency and responsiveness of your ROS 2 applications, ensuring they can handle complex, real-time tasks effectively.
+
+In this unit, you will learn how to combine all of these concepts to efficiently manage the execution of multiple ROS 2 nodes and callbacks, optimizing performance and responsiveness in your robotic applications.
+
+LAUNCH GAZEBO: ros2 launch box_bot_gazebo main_simple.launch.xml
+
+UNIT SETUP: cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_cmake executors_exercises_pkg --dependencies rclcpp
+cd ~/ros2_ws
+colcon build --symlink-install
+source install/setup.bash
+
+//-- 5.3 --//
+
+#include <nav_msgs/msg/odometry.hpp>
+#include <rclcpp/rclcpp.hpp>
+
+class OdomSubscriber : public rclcpp::Node {
+public:
+  OdomSubscriber(std::string odom_topic_name) : Node("simple_subscriber") {
+
+    subscription_ = this->create_subscription<nav_msgs::msg::Odometry>(
+        odom_topic_name, 10,
+        std::bind(&OdomSubscriber::topic_callback, this,
+                  std::placeholders::_1));
+  }
+
+private:
+  void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
+    RCLCPP_INFO(this->get_logger(), "Odometry=['%f','%f','%f']",
+                msg->pose.pose.position.x, msg->pose.pose.position.y,
+                msg->pose.pose.position.z);
+  }
+  rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr subscription_;
+};
+
+int main(int argc, char *argv[]) {
+  // Some initialization.
+  rclcpp::init(argc, argv);
+
+  // Instantiate a node.
+  std::shared_ptr<OdomSubscriber> node =
+      std::make_shared<OdomSubscriber>("/box_bot_1/odom");
+
+
+
+  // This is the same as a print in ROS
+  RCLCPP_INFO(node->get_logger(), "Bacon pancakes, makin bacon pancakes");
+
+  // Start and spin executor SingleThreadded
+  //   rclcpp::spin(node);
+
+  // Same code, but in steps
+  rclcpp::executors::SingleThreadedExecutor executor;
+  executor.add_node(node);
+  executor.spin();
+
+  // Shut down and exit.
+  rclcpp::shut down();
+  return 0;
+}
+
+// Simple subscriber 
+// Passa-se o tipo do odom como parametro
+
+//-- 5.4 --//
+The Multi-Threaded Executor: It creates a variable number of threads that allow multiple messages/events to process in parallel.
+
+
