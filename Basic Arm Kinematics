@@ -1,3 +1,11 @@
 //-- 1.2 --//
 
 Started with a Hands-On Experience.
+
+//-- 2.3 --//
+
+This Rotation Matrix describes the rotation to be done to each of the world frame axes to be where the daruma frame axis is.
+A∗B ≠ B∗A -> Composition Rule
+
+//-- Rotation and Translation 2.4 --//
+START
