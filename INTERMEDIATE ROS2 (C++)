@@ -275,4 +275,26 @@ int main(int argc, char *argv[]) {
 //-- 5.4 --//
 The Multi-Threaded Executor: It creates a variable number of threads that allow multiple messages/events to process in parallel.
 
+//-- 5.5 --//
+
+Call back groups:
+
+Reentrant: All the Callbacks in these types of groups will be able to be executed simultaneously. The Executor will generate as many threads as is needed to do so.
+MutualyExclusive: All the Callbacks inside these types of groups, can be executed ONE at a time. This is useful for Callbacks that, for some reason, affect the same system or use the same resources as another one. In addition, it gives you better control over the Callback flow.
+
+REENTRANT : WORK IN PARALLEL
+callback_group_ =
+        this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
+
+
+Mutually Exclusive: BY DEFAULT THE CALL BACKS ARE ALL IN THE MUTUALLY
+callback_group_ = this->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
+
+Multiple mutualyexclusive: Has the same behavior as REENTRANT, creates 2 threads.
+callback_group_ = this->create_callback_group(
+        rclcpp::CallbackGroupType::MutuallyExclusive);
+callback_group_2 = this->create_callback_group(
+    rclcpp::CallbackGroupType::MutuallyExclusive);
+
+
 
