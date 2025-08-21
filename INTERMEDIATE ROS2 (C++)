@@ -297,4 +297,28 @@ callback_group_2 = this->create_callback_group(
     rclcpp::CallbackGroupType::MutuallyExclusive);
 
 
+//-- 6.3 --//
+
+QoS comaptibility mensages, protocol for down level systems.
+
+Publisher that is best effort dont work in a sub reliable
+
+Reliability = BEST_EFFORT. This is the standard way of setting it in sensors because you are interested in getting a flux of data. It is not important if you lose one or two messages.
+Durability = Volatile. It is also the standard way for sensors, especially sensors with a high volume of data generation. You do not need to save old messages for late-joining subscribers. If you lose old messages, it is irrelevant.
+Liveliness = Automatic. This is the default way, especially for sensors. Consider that the publisher is alive if ANY of its published topics have published something within the time defined by lease duration.
+Deadline = "9223372036.854775807" seconds (INFINITE VALUE). This means that there is NO Deadline. You are not setting any requirements for the period between each published message from the /scan topic. A real sensor should not be set like this, because, normally, sensors have a specific publish rate. However, this is a simulation, so that you can be less strict.
+Lifespan = "9223372036.854775807" seconds(INFINITE VALUE). Again, this means there is NO limitation. No matter how old a message is, it is valid. This, again, is normally not done in real systems because old sensor data is useless. You are less strict because this does not happen in simulation.
+
+History: "keep last"
+This setting ensures that the publisher only keeps the most recent messages, discarding older ones. It’s useful for topics where only the latest data is relevant.
+Queue Size: 10
+This defines the size of the message queue for the subscriber. If the subscriber cannot process a message quickly enough, the oldest messages are dropped once the queue is full. A size of 10 is a reasonable default for many use cases.
+Reliability: reliable
+This policy ensures that messages are delivered reliably, meaning that if a message is lost, it will be retransmitted. This is important for critical communication where data loss cannot be tolerated.
+Durability: volatile
+This means that messages are not retained once they have been sent. The data is not stored for new subscribers that join later. For persistent data that needs to be available for future subscribers, this setting would need to be changed to transient.
+Liveliness: system default
+This determines how the system checks the liveliness of a publisher. The "system default" means that ROS 2 will use the system-defined mechanism for determining if the publisher is still active.
+Deadline, Lifespan, and Lease Durations: set to large values (9223372036854775807 nanoseconds)
+These settings are used to specify timing constraints. For example, the Deadline defines the maximum expected period between messages. When set to such a large value, these constraints essentially become non-restrictive.
 
