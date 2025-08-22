@@ -1,1 +1,34 @@
+// -- Unit Start --//
+
+Many control methods of robots.
+
+// -- 2.2 -- // 
+Robot dynamics review
+
+q: joint angles of the robot
+τ : torque applied in each link.
+D
+(
+q
+)
+  is known inertia matrix.
+C
+(
+q
+,
+˙
+q
+)
+  is known as Coriolis term.
+g
+(
+q
+)
+  is known as gravity vector.
+ 
+Newton Euler method.
+Euler Lagrange method.
+Kane's method.
+
+methods to get the usual mathematic form to represent the dynamic modeling of an arm robot system.
 
