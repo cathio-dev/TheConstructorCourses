@@ -6,4 +6,6 @@ ROS 2 Control is a powerful framework for managing robotic hardware and controll
 
 //-- 1.2 --//
 
-START
+This is where the term control comes into play. Control means managing, commanding, or directing the behavior of a device, or a system of devices, to get expected results. A whole field of study called Control Theory is dedicated to studying and solving control problems.
+
+//-- 2.2 --// START
