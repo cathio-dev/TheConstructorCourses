@@ -9,3 +9,23 @@ ROS 2 Control is a powerful framework for managing robotic hardware and controll
 This is where the term control comes into play. Control means managing, commanding, or directing the behavior of a device, or a system of devices, to get expected results. A whole field of study called Control Theory is dedicated to studying and solving control problems.
 
 //-- 2.2 --// START
+
+//-- 2.3 --//
+
+To add ros2_control to our robot we will go through the following steps:
+
+Create a new package
+Create a configuration file for the controller manager and the control algorithms
+Update the robot's description xacro file
+Create a launch file that will bring up the controllers
+Test the robot controlled by ros2_control
+
+//-- 2.4 --//
+
+//-- 2.5 --//
+
+Important: the joint names that you define in this configuration file must match the joint names in the URDF/XACRO file. The YAML file above for instance, assigns a joint with name "joint1" to both controllers. "joint1" corresponds to the joint name defined by the XML tag <joint name="joint1" type="continuous"> inside the .xacro file (more on that below!).
+
+//-- 2.6 --//
+
+START
