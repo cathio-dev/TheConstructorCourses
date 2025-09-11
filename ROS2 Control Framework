@@ -28,4 +28,32 @@ Important: the joint names that you define in this configuration file must match
 
 //-- 2.6 --//
 
-START
+Updating the xacrofile with the hardware interface and joint parameters
+
+//-- 2.7 --//
+
+Config ready, URDF updated, lets create a Launch File
+
+    robot_state_pub_node = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        output="both",
+        parameters=[robot_description],
+    )
+
+Here we generate a robot_state_publisher node providing the robot_description variable as parameter. This node listens to the /joint_states topic from the joint_state_broadcaster and provides an ongoing view of the robot joint locations through the tf and tf_static topics.
+
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster",
+                   "--controller-manager", "/controller_manager"],
+    )
+
+Here we leverage a python script called spawner, which is provided by the controller_manager package, in order to load and start the joint_state_broadcaster.
+The joint_state_broadcaster publishes the state of the robot on the topics "/rrbot_controller/state" and "/joint_states". The robot state, described by the position, velocity and effort of every robot joint, is transmitted as an "sensor_msgs/ JointState" ROS2 message, that can be read by any ROS2 node.
+
+
+//-- 2.9 --//
+
+HANDS ON PRACTICE
