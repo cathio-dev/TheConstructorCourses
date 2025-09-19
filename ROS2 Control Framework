@@ -57,3 +57,34 @@ The joint_state_broadcaster publishes the state of the robot on the topics "/rrb
 //-- 2.9 --//
 
 HANDS ON PRACTICE
+
+// -- 3.2 -- //
+
+Additionally, there are also 6 transition processes which are tasks executed during the transition from one state to another. Possible transition processes are:
+
+on_configure
+on_cleanup
+on_activate
+on_deactivate
+on_shutdown
+on_error
+
+see the types: ros2 control list_controller_types
+the current types: ros2 control list_controllers
+
+ros2 control unload_controller (controller): da unload neles
+ros2 control set_controller_state (controller) (estado: stop, start)
+
+load_controller  faz load novamente
+
+//-- 3.4 --//
+
+//-- 3.5 --//
+
+ros2 run controller_manager spawner my_controller_name --controller-type joint_state_broadcaster/JointStateBroadcaster
+
+SPAWER 
+
+//-- 4.0 --//
+
+Start
