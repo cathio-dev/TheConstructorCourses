@@ -87,4 +87,24 @@ SPAWER
 
 //-- 4.0 --//
 
-Start
+//-- 4.3 --//
+
+Hardware interface:
+
+To successfully integrate a hardware device with ros2_control, follow these key steps:
+
+Create a package to contain your hardware interface implementation.
+Write a header file defining the interface and necessary functions.
+Implement the source file (.cpp) to handle communication with the hardware.
+Configure CMakeLists.txt and package.xml to ensure proper compilation and integration.
+Register the interface as a plugin so it can be recognized and used within ros2_control.
+By following these steps, you will establish a functional hardware interface that connects your device to ROS 2.
+
+//-- 4.4 --//
+
+cd ~/ros2_ws/src
+
+hardware_interface
+pluginlib
+rclcpp
+rclcpp_lifecycle
