@@ -167,3 +167,35 @@ Dynamixel servos to projects
 //-- 5.17 --//
 
 Series of copy past
+
+// -- 5.20 --//
+
+If you don't have a real dynamixel hardware, use in the xacro urdf: <param name="use_dummy">true</param>
+Just change to FALSE if your not going to use
+
+
+NEXT UNITY: TYPE OF CONTROLERS
+
+// -- 6.2 -- //
+
+position_controllers – Controls joints using position commands.
+effort_controllers – Controls joints by applying force or torque.
+velocity_controllers – Regulates joint movement using velocity commands.
+forward_command_controller – Forwards input commands directly to actuators.
+joint_trajectory_controller – Executes predefined motion trajectories.
+diff_drive_controller – Manages differential drive robots.
+
+//-- 6.5 --//
+
+PASS:
+
+1. ros2 control load_controller --set-state start forward_velocity_controller
+2. ros2 control load_controller --set-state start joint_state_broadcaster
+3. ros2 topic pub /forward_velocity_controller/commands std_msgs/msg/Float64MultiArray "data:
+ - 0.5
+ - 0.5" -1
+
+
+
+
+
