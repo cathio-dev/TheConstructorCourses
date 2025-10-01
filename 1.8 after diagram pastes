@@ -1,0 +1,32 @@
+//-- 1.1 --//
+
+START
+
+//-- 1.3 --//
+
+Pre processor -> helllo.i (many command lines)
+Compiler -> passes C to Assemble (hello.s)
+Assembler -> Runs the code in assemble (hello.o)
+Linker -> executable
+
+//-- 1.4 --//
+
+Flags are options that can be passed to Clang to configure the compilation. We have already used a few flags at the time in the previous seccions, those were -E, -s, -c and -o. Here is what they do:
+
+-E: Run the preprocessor stage.
+
+-S: Run the previous stages as well as LLVM generation (compiler technology) and optimization stages (optimize compilation process at the cost of compilation time) and target-specific code generation, producing an assembly file.
+
+-c: Run all of the above, plus the assembler, generating a target “.o” object file.
+
+-o <file>: Write output to file
+
+std=<standard>: Specify the language standard to compile for.
+
+//-- 1.6 --//
+
+Linking: #pragma once is preprocessor directive designed to cause the current source file to be included only once in a single compilation.
+
+//-- 1.7 --//
+
+The trouble of getting many libraries and many files to organize it, will be minimized with the build system.
