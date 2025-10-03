@@ -30,3 +30,16 @@ Linking: #pragma once is preprocessor directive designed to cause the current so
 //-- 1.7 --//
 
 The trouble of getting many libraries and many files to organize it, will be minimized with the build system.
+
+//-- 2.1 --//
+
+The core components of STL are:
+
+Containers – Hold data in different structures.
+Iterators – Provide a way to traverse data stored in containers.
+Algorithms – Perform operations like sorting, searching, etc., on the data.
+Function Objects – Functions that can be used in STL algorithms.
+
+//-- 2.2 --//
+
+Start containers
